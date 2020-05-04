@@ -6,24 +6,25 @@ import com.example.springreactor.repository.ReservationRepository;
 import io.r2dbc.postgresql.util.Assert;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.reactive.TransactionalOperator;
 import reactor.core.publisher.Flux;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final TransactionalOperator transactionalOperator;
 
-    Flux<Reservation> saveAll(String... names) {
-        return transactionalOperator.transactional(
+    public Flux<Reservation> saveAll(String... names) {
+        return
                 Flux
                         .fromArray(names)
                         .map(name -> new Reservation(null, name))
                         .flatMap(reservationRepository::save)
-                        .doOnNext(this::assertValid)
-        );
+                        .doOnNext(this::assertValid);
     }
 
     private void assertValid(Reservation r) {

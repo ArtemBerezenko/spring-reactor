@@ -20,7 +20,7 @@ public class SampleDataInitializer {
     @EventListener(ApplicationReadyEvent.class)
     public void ready() {
 
-        Flux<Reservation> reservations =  reservationService.saveAll("Oleg", "Stephan", "Jecky Chan");
+        Flux<Reservation> reservations =  reservationService.saveAll("Igor", "John Don", "Chuck", "Oleg", "stephan", "Jecky Chan");
 
         reservationRepository
                 .deleteAll()
