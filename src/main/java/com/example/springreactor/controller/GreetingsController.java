@@ -15,7 +15,7 @@ public class GreetingsController {
 
     private final GreetingService greetingService;
 
-    @GetMapping("/greetings/{name}")
+    @GetMapping("/greet/{name}")
     Mono<GreetingResponse> greet(@PathVariable String name) {
         return greetingService.greet(new GreetingRequest(name));
     }
